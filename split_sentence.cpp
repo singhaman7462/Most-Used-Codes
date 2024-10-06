@@ -1,64 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
-unordered_map<string, int> countWordsInSentence(const string& sentence) {
+pair<unordered_map<string, int>, vector<string>> countWordsAndStoreInOrder(const string& sentence) {
     unordered_map<string, int> wordCount;
+    vector<string> wordsInOrder;
     stringstream ss(sentence);
     string word;
 
     while (ss >> word) {
         // Remove punctuation from the word
         word.erase(remove_if(word.begin(), word.end(), ::ispunct), word.end());
+        
+        // Store word in map and vector
         wordCount[word]++;
+        wordsInOrder.push_back(word);
     }
 
-    return wordCount;
+    return {wordCount, wordsInOrder};
 }
+
 
 int main(){
 
-string sentence = "Hello my name is Jane";
-    unordered_map<string, int> result = countWordsInSentence(sentence);
 
-    for (const auto& pair : result) {
+    string sentence = "Hello, hello! This is a test. A test sentence.";
+    auto result = countWordsAndStoreInOrder(sentence);
+
+    // Output unordered_map with word counts
+    cout << "Word counts:" << endl;
+    for (const auto& pair : result.first) {
         cout << pair.first << ": " << pair.second << endl;
     }
 
-    return 0;
+    // Output vector with words in original order
+    cout << "\nWords in order:" << endl;
+    for (const string& word : result.second) {
+        cout << word << " ";
+    }
+
 
 }
 
 
-// #include <iostream>
-// #include <sstream>
-// #include <unordered_map>
-// #include <string>
-// #include <cctype>
-// #include <iterator>
-// #include <algorithm>
-
-// using namespace std;
-
-// unordered_map<string, int> countWordsInSentence(const string& sentence) {
-//     unordered_map<string, int> wordCount;
-//     stringstream ss(sentence);
-//     string word;
-
-//     while (ss >> word) {
-//         // Remove punctuation from the word
-//         word.erase(remove_if(word.begin(), word.end(), ::ispunct), word.end());
-//         wordCount[word]++;
-//     }
-
-//     return wordCount;
-// }
-
-// int main() {
-//     string sentence = "Hello, hello! This is a test. A test sentence.";
-//     unordered_map<string, int> result = countWordsInSentence(sentence);
-
-//     for (const auto& pair : result) {
-//         cout << pair.first << ": " << pair.second << endl;
-//     }
-
-//     return 0;
-// }
